@@ -8,7 +8,7 @@ SRC     = src/main.c
 OBJ     = $(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
 
 CC      = cc
-CFLAGS  = -Wall -Wextra -Werror
+CFLAGS  = -Wall -Wextra -Werror -pthread
 
 all: $(NAME)
 
