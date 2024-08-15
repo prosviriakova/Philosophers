@@ -4,7 +4,7 @@ SRCDIR  = src/
 OBJDIR  = obj/
 INCDIR  = include/
 
-SRC     = src/main.c
+SRC     = src/main.c src/philosophers.c
 OBJ     = $(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
 
 CC      = cc
