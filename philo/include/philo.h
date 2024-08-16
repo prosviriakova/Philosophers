@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:51:24 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/08/16 01:12:38 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/08/16 23:32:22 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,21 @@
 # include <sys/time.h> // gettimeofday
 # include <unistd.h>   // usleep, write
 
-typedef struct s_philosopher
+# define HELP_MSG	"Usage: ./philo <number_of_philosophers> \
+<time_to_die> <time_to_eat> <time_to_sleep> \
+[number_of_times_each_philosopher_must_eat]"
+
+typedef struct s_philo
 {
 	int			id;
 	pthread_t	thread;
-}				t_philosopher;
+	int			time_to_die;
+	int			time_to_eat;
+	int			time_to_sleep;
+}				t_philo;
 
-void start_simulation(int num_philosophers, int time_to_die, int time_to_eat, int time_to_sleep);
+int				ft_atoi(const char *str);
+void			error_exit(char *msg);
+void			start_simulation(int num_philosophers, t_philo *philos);
 
 #endif
