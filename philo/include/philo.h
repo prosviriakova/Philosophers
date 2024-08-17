@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:51:24 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/08/16 23:32:22 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/08/17 16:19:16 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,20 @@ typedef struct s_philo
 {
 	int			id;
 	pthread_t	thread;
+}				t_philo;
+
+typedef struct s_data
+{
+	int			num_philosophers;
 	int			time_to_die;
 	int			time_to_eat;
 	int			time_to_sleep;
-}				t_philo;
+	int			must_eat_count;
+	t_philo		*philos;
+}				t_data;
 
 int				ft_atoi(const char *str);
 void			error_exit(char *msg);
-void			start_simulation(int num_philosophers, t_philo *philos);
+void			start_simulation(t_data *data);
 
 #endif
