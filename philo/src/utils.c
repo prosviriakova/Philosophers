@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 21:39:44 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/08/17 14:55:04 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/08/17 16:35:48 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_atoi(const char *str)
 {
-	long res;
+	long	res;
 
 	res = 0;
 	while ((*str >= 9 && *str <= 13) || *str == 32)
