@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:51:24 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/08/22 23:54:35 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/12 03:14:22 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ typedef struct s_data
 }					t_data;
 
 int					ft_atoi(const char *str);
-void				error_exit(char *msg);
-void				start_simulation(t_data *data);
+int					start_simulation(t_data *data);
+void				clean_up(t_data *data);
+void				error_exit(t_data *data, char *msg);
 void				init_data(t_data *data, char **argv);
 
 #endif

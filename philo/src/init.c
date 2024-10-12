@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 23:52:42 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/08/22 23:54:09 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/12 03:57:12 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ static void	init_forks(t_data *data)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
 		{
-			printf("Error: Mutex initialization failed.\n");
-			exit(1);
+			while (--i >= 0)
+				pthread_mutex_destroy(&data->forks[i]);
+			error_exit(data, "Error: Mutex initialization failed.");
 		}
 		i++;
 	}
@@ -55,7 +56,7 @@ void	init_data(t_data *data, char **argv)
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philosophers);
 	data->philos = malloc(sizeof(t_philo) * data->num_philosophers);
 	if (!data->philos || !data->forks)
-		error_exit("Error: Memory allocation failed.");
+		error_exit(data, "Error: Memory allocation failed.");
 	init_forks(data);
 	init_philos(data);
 }

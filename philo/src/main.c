@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:50:01 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/08/22 23:55:06 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/12 03:55:49 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	validate_input(int argc, char **argv)
 	int	value;
 
 	if (argc < 5 || argc > 6)
-		error_exit(HELP_MSG);
+		error_exit(NULL, HELP_MSG);
 	i = 1;
 	while (i < argc)
 	{
@@ -27,40 +27,47 @@ static void	validate_input(int argc, char **argv)
 		while (argv[i][j] != '\0')
 		{
 			if (argv[i][j] < '0' || argv[i][j] > '9')
-				error_exit("Arguments must be positive integers.");
+				error_exit(NULL, "Arguments must be positive integers.");
 			j++;
 		}
 		value = ft_atoi(argv[i]);
 		if (value == 0)
-			error_exit("Invalid argument: must be > 0.");
+			error_exit(NULL, "Invalid argument: must be > 0.");
 		i++;
 	}
 }
 
 void	clean_up(t_data *data)
 {
-	pthread_mutex_t	*current_fork;
-	int				count;
+	int	i;
 
-	current_fork = data->forks;
-	count = data->num_philosophers;
-	while (count > 0)
+	if (data->philos)
 	{
-		pthread_mutex_destroy(current_fork);
-		current_fork++;
-		count--;
+		free(data->philos);
+		data->philos = NULL;
 	}
-	free(data->forks);
-	free(data->philos);
+	if (data->forks)
+	{
+		i = 0;
+		while (i < data->num_philosophers)
+		{
+			pthread_mutex_destroy(&data->forks[i]);
+			i++;
+		}
+		free(data->forks);
+		data->forks = NULL;
+	}
 }
 
 int	main(int argc, char **argv)
 {
 	t_data	data;
 
+	memset(&data, 0, sizeof(t_data)); // Инициализируем структуру нулями
 	validate_input(argc, argv);
 	init_data(&data, argv);
-	start_simulation(&data);
+	if (start_simulation(&data) != 0)
+		error_exit(&data, "Error: Failed to create thread.\n");
 	clean_up(&data);
-	return (0);
+	return (EXIT_SUCCESS);
 }
