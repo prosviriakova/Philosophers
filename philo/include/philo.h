@@ -6,13 +6,14 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:51:24 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/12 03:14:22 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/14 23:22:10 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include <limits.h>
 # include <pthread.h>  // pthread_xxx
 # include <stdio.h>    // printf
 # include <stdlib.h>   // malloc, free

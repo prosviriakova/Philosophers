@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:50:01 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/12 03:55:49 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/14 23:26:37 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	validate_input(int argc, char **argv)
 {
 	int	i;
-	int	j;
 	int	value;
 
 	if (argc < 5 || argc > 6)
@@ -23,16 +22,9 @@ static void	validate_input(int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
-		j = 0;
-		while (argv[i][j] != '\0')
-		{
-			if (argv[i][j] < '0' || argv[i][j] > '9')
-				error_exit(NULL, "Arguments must be positive integers.");
-			j++;
-		}
 		value = ft_atoi(argv[i]);
 		if (value == 0)
-			error_exit(NULL, "Invalid argument: must be > 0.");
+			error_exit(NULL, "Invalid argument: must be positive integer greater than zero.");
 		i++;
 	}
 }
