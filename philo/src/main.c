@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:50:01 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/15 00:05:14 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/15 00:43:45 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,6 @@ void	clean_up(t_data *data)
 {
 	int	i;
 
-	if (data->philos)
-	{
-		free(data->philos);
-		data->philos = NULL;
-	}
 	if (data->forks)
 	{
 		i = 0;
@@ -48,6 +43,11 @@ void	clean_up(t_data *data)
 		}
 		free(data->forks);
 		data->forks = NULL;
+	}
+	if (data->philos)
+	{
+		free(data->philos);
+		data->philos = NULL;
 	}
 }
 

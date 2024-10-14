@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 23:52:42 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/15 00:07:37 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/15 00:44:59 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ static void	init_forks(t_data *data)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
 		{
-			while (--i >= 0)
-				pthread_mutex_destroy(&data->forks[i]);
+			data->num_philosophers = i;
 			error_exit(data, "Error: Mutex initialization failed.");
 		}
 		i++;
