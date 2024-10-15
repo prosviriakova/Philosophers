@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 21:39:44 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/14 23:22:22 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/15 01:59:48 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_atoi(const char *str)
 			return (0);
 		res = res * 10 + (*str - '0');
 		if (res > INT_MAX)
-			error_exit(NULL, "Integer overflow.");
+			error_exit(NULL, "Error: Integer overflow.");
 		str++;
 	}
 	return ((int)res);

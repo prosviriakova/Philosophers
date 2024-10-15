@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 01:17:15 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/12 03:29:20 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/15 02:02:33 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ int	start_simulation(t_data *data)
 	i = 0;
 	while (i < data->num_philosophers)
 	{
-		pthread_join(data->philos[i].thread, NULL);
+		if (pthread_join(data->philos[i].thread, NULL) != 0)
+			return (1);
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:50:01 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/15 00:43:45 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/15 01:59:35 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	validate_input(int argc, char **argv)
 	{
 		value = ft_atoi(argv[i]);
 		if (value == 0)
-			error_exit(NULL, "Invalid argument.");
+			error_exit(NULL, "Error: Invalid argument.");
 		i++;
 	}
 }
@@ -58,7 +58,7 @@ int	main(int argc, char **argv)
 	validate_input(argc, argv);
 	init_data(&data, argv);
 	if (start_simulation(&data) != 0)
-		error_exit(&data, "Error: Failed to create thread.\n");
+		error_exit(&data, "Error: Simulation failed.");
 	clean_up(&data);
 	return (EXIT_SUCCESS);
 }
