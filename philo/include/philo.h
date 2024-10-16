@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:51:24 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/16 03:22:39 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/16 16:49:42 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <pthread.h>  // pthread_xxx
 # include <stdio.h>    // printf
 # include <stdlib.h>   // malloc, free
-# include <string.h>   // memset
 # include <sys/time.h> // gettimeofday
 # include <unistd.h>   // usleep, write
 
@@ -30,6 +29,8 @@ struct s_data;
 typedef struct s_philo
 {
 	int				id;
+	int				meals_eaten;
+	long			last_meal_time;
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
@@ -43,9 +44,10 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat_count;
+	int				all_alive;
 	long			start_time;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t print_mutex; // Mutex for synchronized printing
+	pthread_mutex_t	print_mutex;
 	t_philo			*philos;
 }					t_data;
 
