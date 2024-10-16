@@ -6,11 +6,33 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 21:39:44 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/15 01:59:48 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/16 03:35:08 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+long	get_timestamp_in_ms(void)
+{
+	struct timeval	tv;
+	long			ms;
+
+	gettimeofday(&tv, NULL);
+	ms = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	return (ms);
+}
+
+void	print_status(t_philo *philosopher, char *status)
+{
+	t_data	*data;
+	long	timestamp;
+
+	data = philosopher->data;
+	pthread_mutex_lock(&data->print_mutex);
+	timestamp = get_timestamp_in_ms() - data->start_time; 		// Calculate elapsed time
+	printf("%ld %d %s\n", timestamp, philosopher->id, status);
+	pthread_mutex_unlock(&data->print_mutex);
+}
 
 int	ft_atoi(const char *str)
 {

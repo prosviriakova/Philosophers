@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:51:24 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/14 23:22:10 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/16 03:22:39 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,15 @@
 <time_to_die> <time_to_eat> <time_to_sleep> \
 [number_of_times_each_philosopher_must_eat]"
 
+struct s_data;
+
 typedef struct s_philo
 {
 	int				id;
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	struct s_data	*data;
 }					t_philo;
 
 typedef struct s_data
@@ -40,12 +43,16 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat_count;
+	long			start_time;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t print_mutex; // Mutex for synchronized printing
 	t_philo			*philos;
 }					t_data;
 
 int					ft_atoi(const char *str);
 int					start_simulation(t_data *data);
+long				get_timestamp_in_ms(void);
+void				print_status(t_philo *philosopher, char *status);
 void				clean_up(t_data *data);
 void				error_exit(t_data *data, char *msg);
 void				init_data(t_data *data, char **argv);
