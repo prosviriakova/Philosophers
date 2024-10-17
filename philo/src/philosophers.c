@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 01:17:15 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/16 18:32:25 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/18 01:40:19 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,20 @@
 
 static void	*single(t_philo *philosopher, t_data *data)
 {
-	pthread_mutex_lock(philosopher->left_fork);
+	pthread_mutex_lock(philosopher->first_fork);
 	print_status(philosopher, "has taken a fork");
 	usleep(data->time_to_die * 1000);
 	print_status(philosopher, "died");
-	pthread_mutex_unlock(philosopher->left_fork);
+	pthread_mutex_unlock(philosopher->first_fork);
 	return (NULL);
 }
 
 void	take_forks(t_philo *philo)
 {
-	if (philo->id % 2 == 0)
-	{
-		pthread_mutex_lock(philo->right_fork);
-		print_status(philo, "has taken a fork");
-		pthread_mutex_lock(philo->left_fork);
-		print_status(philo, "has taken a fork");
-	}
-	else
-	{
-		pthread_mutex_lock(philo->left_fork);
-		print_status(philo, "has taken a fork");
-		pthread_mutex_lock(philo->right_fork);
-		print_status(philo, "has taken a fork");
-	}
+	pthread_mutex_lock(philo->first_fork);
+	print_status(philo, "has taken a fork");
+	pthread_mutex_lock(philo->second_fork);
+	print_status(philo, "has taken a fork");
 }
 
 void	eat(t_philo *philo)
@@ -64,8 +54,8 @@ void	*philosopher_routine(void *arg)
 	{
 		take_forks(philosopher);
 		eat(philosopher);
-		pthread_mutex_unlock(philosopher->left_fork);
-		pthread_mutex_unlock(philosopher->right_fork);
+		pthread_mutex_unlock(philosopher->first_fork);
+		pthread_mutex_unlock(philosopher->second_fork);
 		print_status(philosopher, "is sleeping");
 		usleep(data->time_to_sleep * 1000);
 		print_status(philosopher, "is thinking");

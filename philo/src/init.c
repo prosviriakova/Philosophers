@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 23:52:42 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/16 16:50:26 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/18 01:36:04 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,13 @@ static int	init_philos(t_data *data)
 		data->philos[i].id = i + 1;
 		data->philos[i].meals_eaten = 0;
 		data->philos[i].last_meal_time = 0;
-		data->philos[i].left_fork = &data->forks[i];
-		data->philos[i].right_fork = &data->forks[(i + 1) % data->num_philosophers];
+		data->philos[i].first_fork = &data->forks[(i + 1) % data->num_philosophers];
+		data->philos[i].second_fork = &data->forks[i];
+		if (i % 2 == 0)  // even ones are left-handed
+		{
+			data->philos[i].first_fork = &data->forks[i];
+			data->philos[i].second_fork = &data->forks[(i + 1) % data->num_philosophers];
+		}
 		data->philos[i].data = data;
 		i++;
 	}
