@@ -19,8 +19,7 @@ In the mandatory part, each philosopher is a thread and each fork is protected b
 - Philosophers should alternately eat, think, and sleep.
 - The program must handle proper termination and avoid data races.
 
-### Bonus Part
-For the bonus part of this project, the problem is the same with a few differences: philosophers are now processes and the forks are now a counting semaphore. The forks are arranged at the center of the table when not in use and any philosopher can take any fork.
+*Note: This project covers only the mandatory requirements.*
 
 ### How to Use
 
@@ -50,6 +49,28 @@ For the bonus part of this project, the problem is the same with a few differenc
     ```bash
     ./philo 4 800 200 200 5
     ```
+### Visualization Tool
+
+To visualize the philosophers' simulation, you can use the **[Philosophers Visualizer](https://github.com/nafuka11/philosophers-visualizer)**. This is a simple web-based tool to visualize the dining philosophers' activities, such as eating, thinking, and sleeping.
+
+### Testing the Accuracy of Delays
+
+To test how precise the `usleep` function is on your system, there are two test scripts provided in the `test/` folder:
+
+1. **C Test (`usleep_test.c`)**:
+    - Compile and run the C test for `usleep`:
+    ```bash
+    gcc usleep_test.c -o usleep_test
+    ./usleep_test
+    ```
+    This will check how accurately the `usleep` function works in your environment by measuring the actual delay compared to the requested one.
+
+2. **Python Test (`delay_o_meter.py`)**:
+    - Run the Python test:
+    ```bash
+    python3 delay_o_meter.py
+    ```
+    This script will perform 20 measurements of a 200 ms sleep and calculate the average additional delay added by the system.
 
 ### Contributing
 
