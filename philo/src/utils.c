@@ -6,32 +6,39 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 21:39:44 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/16 03:35:08 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/18 18:59:22 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	get_timestamp_in_ms(void)
+long	current_time(void)
 {
 	struct timeval	tv;
-	long			ms;
+	long			milliseconds;
 
 	gettimeofday(&tv, NULL);
-	ms = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	return (ms);
+	milliseconds = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	return (milliseconds);
 }
 
-void	print_status(t_philo *philosopher, char *status)
+void sleep_ms(long sleep_time)
 {
-	t_data	*data;
+    long start_time;
+
+    start_time = current_time();
+    while (current_time() - start_time < sleep_time)
+        usleep(100);
+}
+
+void	print_status(t_philo *philo, char *status)
+{
 	long	timestamp;
 
-	data = philosopher->data;
-	pthread_mutex_lock(&data->print_mutex);
-	timestamp = get_timestamp_in_ms() - data->start_time; 		// Calculate elapsed time
-	printf("%ld %d %s\n", timestamp, philosopher->id, status);
-	pthread_mutex_unlock(&data->print_mutex);
+	pthread_mutex_lock(&philo->data->print_mutex);
+	timestamp = current_time() - philo->data->start_time; 
+	printf("%ld %d %s\n", timestamp, philo->id, status);
+	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
 int	ft_atoi(const char *str)
