@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 01:17:15 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/18 19:59:42 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/18 20:16:19 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	*philosopher_routine(void *arg)
 {
 	t_philo	*philosopher;
 	t_data	*data;
-	long thinking_time;
+	long	thinking_time;
 
 	philosopher = (t_philo *)arg;
 	data = philosopher->data;

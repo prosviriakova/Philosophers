@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 21:39:44 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/18 18:59:22 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/18 20:15:34 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ long	current_time(void)
 	return (milliseconds);
 }
 
-void sleep_ms(long sleep_time)
+void	sleep_ms(long sleep_time)
 {
-    long start_time;
+	long	start_time;
 
-    start_time = current_time();
-    while (current_time() - start_time < sleep_time)
-        usleep(100);
+	start_time = current_time();
+	while (current_time() - start_time < sleep_time)
+		usleep(100);
 }
 
 void	print_status(t_philo *philo, char *status)
@@ -36,7 +36,7 @@ void	print_status(t_philo *philo, char *status)
 	long	timestamp;
 
 	pthread_mutex_lock(&philo->data->print_mutex);
-	timestamp = current_time() - philo->data->start_time; 
+	timestamp = current_time() - philo->data->start_time;
 	printf("%ld %d %s\n", timestamp, philo->id, status);
 	pthread_mutex_unlock(&philo->data->print_mutex);
 }
