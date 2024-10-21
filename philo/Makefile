@@ -1,14 +1,15 @@
-NAME    = philo
+NAME    =	philo
 
-SRCDIR  = src/
-OBJDIR  = obj/
-INCDIR  = include/
+SRCDIR  =	src/
+OBJDIR  =	obj/
+INCDIR  =	include/
 
-SRC     = src/main.c src/philosophers.c src/utils.c src/init.c
-OBJ     = $(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
+SRC     =	src/main.c src/philosophers.c src/utils.c src/init.c  \
+			src/simulation.c src/monitor.c 
+OBJ     =	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
 
-CC      = cc
-CFLAGS  = -Wall -Wextra -Werror -pthread
+CC      =	cc
+CFLAGS  =	-Wall -Wextra -Werror -pthread
 
 all: $(NAME)
 

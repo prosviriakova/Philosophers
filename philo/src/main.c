@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:50:01 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/18 20:17:10 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/21 17:41:58 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int	main(int argc, char **argv)
 	init_data(&data, argv);
 	if (start_simulation(&data) != 0)
 		error_exit(&data, "Error: Simulation failed.");
+	if (finish_simulation(&data) != 0)
+        error_exit(&data, "Error: Failed to join threads.");
 	clean_up(&data);
 	return (EXIT_SUCCESS);
 }
