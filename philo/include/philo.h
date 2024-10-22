@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:51:24 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/22 23:38:46 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/23 00:18:22 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_data
 	int				all_alive;
 	long			start_time;
 	bool			treads_ready;
+	bool			end_simulation;
 	pthread_t		monitor_thread;
 	pthread_mutex_t	treads_mutex;
 	pthread_mutex_t	*forks;
@@ -74,5 +75,6 @@ void				init_data(t_data *data, char **argv);
 // thread
 void				*philosopher_routine(void *arg);
 void				*monitor_routine(void *arg);
+void				wait_all_threads(t_data *data);
 
 #endif

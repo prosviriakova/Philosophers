@@ -6,48 +6,60 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:17:10 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/21 17:40:39 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/23 01:04:25 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int finish_simulation(t_data *data)
+bool	sim_finished(t_data *data)
 {
-    int i;
-
-    i = 0;
-    while (i < data->num_philosophers)
-    {
-        if (pthread_join(data->philos[i].thread, NULL) != 0)
-            return (1);
-        i++;
-    }
-    if (data->num_philosophers > 1)
-    {
-        if (pthread_join(data->monitor_thread, NULL) != 0)
-            return (1);
-    }
-    return (0);
+	return (get_bool(&data->treads_mutex, &data->end_simulation));
 }
 
-int	start_simulation(t_data *data)
+void	wait_all_threads(t_data *data)
+{
+	while (!get_bool(&data->treads_mutex, &data->treads_ready))
+		usleep(100);
+}
+
+int	finish_simulation(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	data->start_time = current_time();
 	while (i < data->num_philosophers)
 	{
-		data->philos[i].last_meal_time = data->start_time;
-		if (pthread_create(&data->philos[i].thread, NULL, philosopher_routine,
-				&data->philos[i]) != 0)
+		if (pthread_join(data->philos[i].thread, NULL) != 0)
 			return (1);
 		i++;
 	}
 	if (data->num_philosophers > 1)
 	{
-		if (pthread_create(&data->monitor_thread, NULL, &monitor_routine, data) != 0)
+		if (pthread_join(data->monitor_thread, NULL) != 0)
+			return (1);
+	}
+	return (0);
+}
+
+int	start_simulation(t_data *data)
+{
+	int i;
+
+	i = 0;
+	while (i < data->num_philosophers)
+	{
+		if (pthread_create(&data->philos[i].thread, NULL, philosopher_routine,
+				&data->philos[i]) != 0)
+			return (1);
+		i++;
+	}
+	data->start_time = current_time();
+	set_bool(&data->treads_mutex, &data->treads_ready, true);
+	if (data->num_philosophers > 1)
+	{
+		if (pthread_create(&data->monitor_thread, NULL, &monitor_routine,
+				data) != 0)
 			return (1);
 	}
 	return (0);

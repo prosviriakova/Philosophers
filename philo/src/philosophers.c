@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 01:17:15 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/22 01:10:32 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/23 00:54:26 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void	*philosopher_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	data = philo->data;
+	wait_all_threads(data);
+	set_long(&data->eat_mutex, &philo->last_meal_time, data->start_time);
 	if (data->num_philosophers == 1)
 		return (single(philo, data));
 	if (philo->id % 2 == 0)
