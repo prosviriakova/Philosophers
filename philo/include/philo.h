@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:51:24 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/21 17:48:27 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/22 21:33:57 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,21 @@ typedef struct s_data
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat_count;
+	int				all_alive;
 	long			start_time;
 	pthread_t		monitor_thread;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
+	pthread_mutex_t	eat_mutex;
 	t_philo			*philos;
 }					t_data;
 
 int					ft_atoi(const char *str);
+int					ft_strcmp(const char *s1, const char *s2);
 int					start_simulation(t_data *data);
 int					finish_simulation(t_data *data);
 long				current_time(void);
-void				sleep_ms(long sleep_time);
+void				sleep_ms(long duration, t_data *data);
 void				print_status(t_philo *philosopher, char *status);
 void				clean_up(t_data *data);
 void				error_exit(t_data *data, char *msg);

@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:50:01 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/21 17:41:58 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/22 01:08:55 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	clean_up(t_data *data)
 	}
 	if (&data->print_mutex)
 		pthread_mutex_destroy(&data->print_mutex);
+	if (&data->eat_mutex)
+        pthread_mutex_destroy(&data->eat_mutex);
 	if (data->philos)
 	{
 		free(data->philos);

@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 01:17:15 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/21 18:44:30 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/22 01:10:32 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static void	*single(t_philo *philo, t_data *data)
 {
 	pthread_mutex_lock(philo->first_fork);
 	print_status(philo, "has taken a fork");
-	sleep_ms(data->time_to_die);
-	print_status(philo, "died");
+	sleep_ms(data->time_to_die, data);
 	pthread_mutex_unlock(philo->first_fork);
+	print_status(philo, "died");
 	return (NULL);
 }
 
@@ -32,10 +32,15 @@ static void	take_forks(t_philo *philo)
 
 static void	eat(t_philo *philo, t_data *data)
 {
-	philo->meals_eaten++;
-	philo->last_meal_time = current_time() - data->start_time;
+	pthread_mutex_lock(&data->eat_mutex);
+	philo->last_meal_time = current_time();
+	pthread_mutex_unlock(&data->eat_mutex);
 	print_status(philo, "is eating");
-	sleep_ms(data->time_to_eat);
+	if (data->must_eat_count != -1)
+		philo->meals_eaten++;
+	sleep_ms(data->time_to_eat, data);
+	pthread_mutex_unlock(philo->first_fork);
+	pthread_mutex_unlock(philo->second_fork);
 }
 
 void	*philosopher_routine(void *arg)
@@ -49,18 +54,18 @@ void	*philosopher_routine(void *arg)
 	if (data->num_philosophers == 1)
 		return (single(philo, data));
 	if (philo->id % 2 == 0)
-		sleep_ms(data->time_to_eat / 2);
-	while (data->must_eat_count == -1 || philo->meals_eaten < data->must_eat_count)
+		sleep_ms(data->time_to_eat / 2, data);
+	while (data->all_alive)
 	{
 		take_forks(philo);
 		eat(philo, data);
-		pthread_mutex_unlock(philo->first_fork);
-		pthread_mutex_unlock(philo->second_fork);
+		if (data->must_eat_count != -1 && philo->meals_eaten >= data->must_eat_count)
+            break;
 		print_status(philo, "is sleeping");
-		sleep_ms(data->time_to_sleep);
+		sleep_ms(data->time_to_sleep, data);
 		print_status(philo, "is thinking");
         thinking_time = (current_time() - philo->last_meal_time) % data->time_to_eat;
-        sleep_ms(thinking_time);
+        sleep_ms(thinking_time, data);
 	}
 	return (NULL);
 }
