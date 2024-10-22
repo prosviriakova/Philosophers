@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 23:52:42 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/22 01:27:16 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/22 22:57:07 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ static int	init_mutexes(t_data *data)
 		}
 		i++;
 	}
+	if (pthread_mutex_init(&data->treads_mutex, NULL) != 0)
+		return (1);
 	if (pthread_mutex_init(&data->print_mutex, NULL) != 0)
 		return (1);
 	if (pthread_mutex_init(&data->eat_mutex, NULL) != 0)
@@ -71,6 +73,7 @@ void	init_data(t_data *data, char **argv)
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
 	data->all_alive = 1;
+	data->treads_ready = false;
 	data->start_time = 0;
 	if (argv[5])
 		data->must_eat_count = ft_atoi(argv[5]);

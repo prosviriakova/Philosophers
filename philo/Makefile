@@ -1,22 +1,24 @@
-NAME    =	philo
+NAME    	=	philo
 
-SRCDIR  =	src/
-OBJDIR  =	obj/
-INCDIR  =	include/
+SRCDIR  	=	src/
+OBJDIR  	=	obj/
+INCDIR  	=	include/
 
-SRC     =	src/main.c src/philosophers.c src/utils.c src/init.c  \
-			src/simulation.c src/monitor.c 
-OBJ     =	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
+SRC     	=	src/main.c src/philosophers.c src/utils.c src/init.c  \
+				src/simulation.c src/monitor.c src/sync.c
+OBJ     	=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
 
-CC      =	cc
-CFLAGS  =	-Wall -Wextra -Werror -pthread
+CC      	=	cc
+CFLAGS  	=	-Wall -Wextra -Werror -pthread
+
+INCLUDES 	=	$(INCDIR)philo.h $(INCDIR)sync.h
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) -I $(INCDIR) -o $(NAME) $(OBJ) 
 
-$(OBJDIR)%.o: $(SRCDIR)%.c $(INCDIR)philo.h
+$(OBJDIR)%.o: $(SRCDIR)%.c $(INCLUDES)
 	@mkdir -p $(OBJDIR)
 	$(CC) $(CFLAGS) -I $(INCDIR) -c $< -o $@
 

@@ -6,15 +6,17 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:51:24 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/22 21:33:57 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/22 23:38:46 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
+# include "sync.h"
 # include <limits.h>
-# include <pthread.h>  // pthread_xxx
+# include <pthread.h> // pthread_xxx
+# include <stdbool.h>
 # include <stdio.h>    // printf
 # include <stdlib.h>   // malloc, free
 # include <sys/time.h> // gettimeofday
@@ -46,23 +48,30 @@ typedef struct s_data
 	int				must_eat_count;
 	int				all_alive;
 	long			start_time;
+	bool			treads_ready;
 	pthread_t		monitor_thread;
+	pthread_mutex_t	treads_mutex;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	eat_mutex;
 	t_philo			*philos;
 }					t_data;
 
-int					ft_atoi(const char *str);
-int					ft_strcmp(const char *s1, const char *s2);
+// simulation
 int					start_simulation(t_data *data);
 int					finish_simulation(t_data *data);
+
+// utility
+int					ft_atoi(const char *str);
+int					ft_strcmp(const char *s1, const char *s2);
 long				current_time(void);
 void				sleep_ms(long duration, t_data *data);
 void				print_status(t_philo *philosopher, char *status);
 void				clean_up(t_data *data);
 void				error_exit(t_data *data, char *msg);
 void				init_data(t_data *data, char **argv);
+
+// thread
 void				*philosopher_routine(void *arg);
 void				*monitor_routine(void *arg);
 
