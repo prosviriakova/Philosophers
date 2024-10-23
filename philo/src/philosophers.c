@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 01:17:15 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/23 00:54:26 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:02:23 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ static void	take_forks(t_philo *philo)
 
 static void	eat(t_philo *philo, t_data *data)
 {
-	pthread_mutex_lock(&data->eat_mutex);
-	philo->last_meal_time = current_time();
-	pthread_mutex_unlock(&data->eat_mutex);
+	set_long(&data->eat_mutex, &philo->last_meal_time, current_time());
 	print_status(philo, "is eating");
 	if (data->must_eat_count != -1)
 		philo->meals_eaten++;
@@ -53,21 +51,24 @@ void	*philosopher_routine(void *arg)
 	data = philo->data;
 	wait_all_threads(data);
 	set_long(&data->eat_mutex, &philo->last_meal_time, data->start_time);
-	if (data->num_philosophers == 1)
+	increase_int(&data->treads_mutex, &data->philo_ready);
+	if (data->num_philos == 1)
 		return (single(philo, data));
 	if (philo->id % 2 == 0)
 		sleep_ms(data->time_to_eat / 2, data);
-	while (data->all_alive)
+	while (!sim_finished(data))
 	{
 		take_forks(philo);
 		eat(philo, data);
-		if (data->must_eat_count != -1 && philo->meals_eaten >= data->must_eat_count)
-            break;
+		if (data->must_eat_count != -1
+			&& philo->meals_eaten >= data->must_eat_count)
+			break ;
 		print_status(philo, "is sleeping");
 		sleep_ms(data->time_to_sleep, data);
 		print_status(philo, "is thinking");
-        thinking_time = (current_time() - philo->last_meal_time) % data->time_to_eat;
-        sleep_ms(thinking_time, data);
+		thinking_time = (current_time() - philo->last_meal_time)
+			% data->time_to_eat;
+		sleep_ms(thinking_time, data);
 	}
 	return (NULL);
 }

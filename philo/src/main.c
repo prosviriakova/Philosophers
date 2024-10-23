@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:50:01 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/22 22:57:38 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:02:09 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	clean_up(t_data *data)
 	if (data->forks)
 	{
 		i = 0;
-		while (i < data->num_philosophers)
+		while (i < data->num_philos)
 		{
 			pthread_mutex_destroy(&data->forks[i]);
 			i++;
@@ -45,10 +45,8 @@ void	clean_up(t_data *data)
 		data->forks = NULL;
 	}
 	pthread_mutex_destroy(&data->treads_mutex);
-	if (&data->print_mutex)
-		pthread_mutex_destroy(&data->print_mutex);
-	if (&data->eat_mutex)
-        pthread_mutex_destroy(&data->eat_mutex);
+	pthread_mutex_destroy(&data->print_mutex);
+	pthread_mutex_destroy(&data->eat_mutex);
 	if (data->philos)
 	{
 		free(data->philos);
@@ -65,7 +63,7 @@ int	main(int argc, char **argv)
 	if (start_simulation(&data) != 0)
 		error_exit(&data, "Error: Simulation failed.");
 	if (finish_simulation(&data) != 0)
-        error_exit(&data, "Error: Failed to join threads.");
+		error_exit(&data, "Error: Failed to join threads.");
 	clean_up(&data);
 	return (EXIT_SUCCESS);
 }

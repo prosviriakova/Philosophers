@@ -6,14 +6,13 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:51:24 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/23 00:18:22 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/23 19:08:36 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include "sync.h"
 # include <limits.h>
 # include <pthread.h> // pthread_xxx
 # include <stdbool.h>
@@ -26,7 +25,7 @@
 <time_to_die> <time_to_eat> <time_to_sleep> \
 [number_of_times_each_philosopher_must_eat]"
 
-struct s_data;
+struct	s_data;
 
 typedef struct s_philo
 {
@@ -41,12 +40,12 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	int				num_philosophers;
+	int				num_philos;
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
 	int				must_eat_count;
-	int				all_alive;
+	int				philo_ready;
 	long			start_time;
 	bool			treads_ready;
 	bool			end_simulation;
@@ -61,6 +60,9 @@ typedef struct s_data
 // simulation
 int					start_simulation(t_data *data);
 int					finish_simulation(t_data *data);
+bool				threads_ready(pthread_mutex_t *mutex, int *threads,
+						int philo_nbr);
+bool				sim_finished(t_data *data);
 
 // utility
 int					ft_atoi(const char *str);
@@ -71,10 +73,17 @@ void				print_status(t_philo *philosopher, char *status);
 void				clean_up(t_data *data);
 void				error_exit(t_data *data, char *msg);
 void				init_data(t_data *data, char **argv);
+void				increase_int(pthread_mutex_t *mutex, int *value);
 
 // thread
 void				*philosopher_routine(void *arg);
 void				*monitor_routine(void *arg);
 void				wait_all_threads(t_data *data);
+
+// getters and setters
+void				set_bool(pthread_mutex_t *mutex, bool *dest, bool value);
+void				set_long(pthread_mutex_t *mutex, long *dest, long value);
+bool				get_bool(pthread_mutex_t *mutex, bool *value);
+long				get_long(pthread_mutex_t *mutex, long *value);
 
 #endif

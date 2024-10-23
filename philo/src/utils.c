@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 21:39:44 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/22 22:31:56 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/23 16:52:37 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	sleep_ms(long duration, t_data *data)
 	long	start_time;
 
 	start_time = current_time();
-	while (data->all_alive && (current_time() - start_time) < duration)
+	while (!sim_finished(data) && (current_time() - start_time) < duration)
 		usleep(100);
 }
 
