@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 01:17:15 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/24 17:38:52 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/24 18:03:16 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,22 @@ static void	eat(t_philo *philo, t_data *data)
 	if (data->must_eat_count != -1)
 	{
 		philo->meals_eaten++;
+		printf("Philosopher %d has eaten %d times\n", philo->id, philo->meals_eaten);
 		if (philo->meals_eaten == data->must_eat_count)
 			increase_int(&data->eat_mutex, &data->philo_full);
 	}
 	sleep_ms(data->time_to_eat, data);
 	pthread_mutex_unlock(philo->first_fork);
 	pthread_mutex_unlock(philo->second_fork);
+}
+
+static void	philo_sleep(t_philo *philo, t_data *data)
+{
+	if (!sim_finished(data))
+	{
+		print_status(philo, "is sleeping");
+		sleep_ms(data->time_to_sleep, data);
+	}
 }
 
 void	*philosopher_routine(void *arg)
@@ -64,8 +74,7 @@ void	*philosopher_routine(void *arg)
 	{
 		take_forks(philo);
 		eat(philo, data);
-		print_status(philo, "is sleeping");
-		sleep_ms(data->time_to_sleep, data);
+		philo_sleep(philo, data);
 		print_status(philo, "is thinking");
 		thinking_time = (current_time() - philo->last_meal_time)
 			% data->time_to_eat;
