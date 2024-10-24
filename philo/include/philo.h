@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:51:24 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/23 19:08:36 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/24 15:10:40 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ int					ft_strcmp(const char *s1, const char *s2);
 long				current_time(void);
 void				sleep_ms(long duration, t_data *data);
 void				print_status(t_philo *philosopher, char *status);
+void				destroy_mutexes(t_data *data);
 void				clean_up(t_data *data);
 void				error_exit(t_data *data, char *msg);
+void				error_exit_full(t_data *data, char *msg);
 void				init_data(t_data *data, char **argv);
 void				increase_int(pthread_mutex_t *mutex, int *value);
 

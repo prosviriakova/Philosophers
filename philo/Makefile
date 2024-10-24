@@ -5,7 +5,7 @@ OBJDIR  	=	obj/
 INCDIR  	=	include/
 
 SRC     	=	src/main.c src/philosophers.c src/utils.c src/init.c  \
-				src/simulation.c src/monitor.c src/sync.c
+				src/simulation.c src/monitor.c src/sync.c src/error.c 
 OBJ     	=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
 
 CC      	=	cc

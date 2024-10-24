@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 21:39:44 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/23 16:52:37 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/24 15:09:40 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,19 @@ void	sleep_ms(long duration, t_data *data)
 	start_time = current_time();
 	while (!sim_finished(data) && (current_time() - start_time) < duration)
 		usleep(100);
+}
+
+void	print_status(t_philo *philo, char *status)
+{
+	long	timestamp;
+
+	pthread_mutex_lock(&philo->data->print_mutex);
+	if (!sim_finished(philo->data) || ft_strcmp(status, "died") == 0)
+	{
+		timestamp = current_time() - philo->data->start_time;
+		printf("%ld %d %s\n", timestamp, philo->id, status);
+	}
+	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
 int	ft_strcmp(const char *s1, const char *s2)
@@ -62,12 +75,4 @@ int	ft_atoi(const char *str)
 		str++;
 	}
 	return ((int)res);
-}
-
-void	error_exit(t_data *data, char *msg)
-{
-	printf("%s\n", msg);
-	if (data)
-		clean_up(data);
-	exit(EXIT_FAILURE);
 }

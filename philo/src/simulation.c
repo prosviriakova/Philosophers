@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 17:17:10 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/23 19:02:36 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/24 15:01:04 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,6 @@ void	wait_all_threads(t_data *data)
 {
 	while (!get_bool(&data->treads_mutex, &data->treads_ready))
 		usleep(100);
-}
-
-void	print_status(t_philo *philo, char *status)
-{
-	long	timestamp;
-
-	pthread_mutex_lock(&philo->data->print_mutex);
-	if (!sim_finished(philo->data) || ft_strcmp(status, "died") == 0)
-	{
-		timestamp = current_time() - philo->data->start_time;
-		printf("%ld %d %s\n", timestamp, philo->id, status);
-	}
-	pthread_mutex_unlock(&philo->data->print_mutex);
 }
 
 int	finish_simulation(t_data *data)
