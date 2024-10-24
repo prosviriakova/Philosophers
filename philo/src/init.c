@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 23:52:42 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/23 19:05:45 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/24 16:29:56 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	init_data(t_data *data, char **argv)
 	data->end_simulation = false;
 	data->treads_ready = false;
 	data->philo_ready = 0;
+	data->philo_full = 0;
 	data->start_time = 0;
 	if (argv[5])
 		data->must_eat_count = ft_atoi(argv[5]);

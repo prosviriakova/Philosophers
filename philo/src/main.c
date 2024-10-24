@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:50:01 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/24 15:07:27 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/24 16:43:29 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	main(int argc, char **argv)
 	if (start_simulation(&data) != 0)
 		error_exit_full(&data, "Error: Failed to create threads.");
 	if (finish_simulation(&data) != 0)
-		error_exit(&data, "Error: Failed to join threads.");
+		error_exit_full(&data, "Error: Failed to join threads.");
 	destroy_mutexes(&data);
 	clean_up(&data);
 	return (EXIT_SUCCESS);

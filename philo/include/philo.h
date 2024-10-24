@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:51:24 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/24 15:10:40 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/24 16:29:45 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_data
 	int				time_to_sleep;
 	int				must_eat_count;
 	int				philo_ready;
+	int				philo_full;
 	long			start_time;
 	bool			treads_ready;
 	bool			end_simulation;

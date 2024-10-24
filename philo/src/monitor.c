@@ -6,13 +6,13 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 16:59:44 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/23 19:07:26 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:19:13 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_last_meal(t_philo *philo)
+int	check_death(t_philo *philo)
 {
 	t_data	*data;
 	long	time_since_last_meal;
@@ -24,8 +24,24 @@ int	check_last_meal(t_philo *philo)
 	if (time_since_last_meal >= data->time_to_die)
 	{
 		set_bool(&data->treads_mutex, &data->end_simulation, true);
+		print_status(philo, "died");
 		return (1);
 	}
+	return (0);
+}
+
+int	check_full(t_data *data)
+{
+	if (data->must_eat_count == -1)
+		return (0);
+	pthread_mutex_lock(&data->eat_mutex);
+	if (data->philo_full == data->num_philos)
+	{
+		set_bool(&data->treads_mutex, &data->end_simulation, true);
+		pthread_mutex_unlock(&data->eat_mutex);
+		return (1);
+	}
+	pthread_mutex_unlock(&data->eat_mutex);
 	return (0);
 }
 
@@ -55,14 +71,11 @@ void	*monitor_routine(void *arg)
 		i = 0;
 		while (i < data->num_philos)
 		{
-			if (check_last_meal(&data->philos[i]))
-			{
-				print_status(&data->philos[i], "died");
+			if (check_death(&data->philos[i]) || check_full(data))
 				return (NULL);
-			}
 			i++;
 		}
-		usleep(1000);
+		usleep(100);
 	}
 	return (NULL);
 }

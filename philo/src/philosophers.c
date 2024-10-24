@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 01:17:15 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/23 19:02:23 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/24 17:38:52 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ static void	eat(t_philo *philo, t_data *data)
 	set_long(&data->eat_mutex, &philo->last_meal_time, current_time());
 	print_status(philo, "is eating");
 	if (data->must_eat_count != -1)
+	{
 		philo->meals_eaten++;
+		if (philo->meals_eaten == data->must_eat_count)
+			increase_int(&data->eat_mutex, &data->philo_full);
+	}
 	sleep_ms(data->time_to_eat, data);
 	pthread_mutex_unlock(philo->first_fork);
 	pthread_mutex_unlock(philo->second_fork);
@@ -60,9 +64,6 @@ void	*philosopher_routine(void *arg)
 	{
 		take_forks(philo);
 		eat(philo, data);
-		if (data->must_eat_count != -1
-			&& philo->meals_eaten >= data->must_eat_count)
-			break ;
 		print_status(philo, "is sleeping");
 		sleep_ms(data->time_to_sleep, data);
 		print_status(philo, "is thinking");
