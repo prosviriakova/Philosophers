@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 01:17:15 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/24 18:03:16 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/25 20:28:43 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,22 +22,18 @@ static void	*single(t_philo *philo, t_data *data)
 	return (NULL);
 }
 
-static void	take_forks(t_philo *philo)
+static void	philo_eat(t_philo *philo, t_data *data)
 {
 	pthread_mutex_lock(philo->first_fork);
 	print_status(philo, "has taken a fork");
 	pthread_mutex_lock(philo->second_fork);
 	print_status(philo, "has taken a fork");
-}
-
-static void	eat(t_philo *philo, t_data *data)
-{
 	set_long(&data->eat_mutex, &philo->last_meal_time, current_time());
 	print_status(philo, "is eating");
 	if (data->must_eat_count != -1)
 	{
 		philo->meals_eaten++;
-		printf("Philosopher %d has eaten %d times\n", philo->id, philo->meals_eaten);
+		// printf("Philosopher %d has eaten %d times\n", philo->id, philo->meals_eaten);
 		if (philo->meals_eaten == data->must_eat_count)
 			increase_int(&data->eat_mutex, &data->philo_full);
 	}
@@ -55,11 +51,28 @@ static void	philo_sleep(t_philo *philo, t_data *data)
 	}
 }
 
+static void	philo_think(t_philo *philo, t_data *data)
+{
+	int	t_eat;
+	int	t_sleep;
+	int	t_think;
+
+	if (data->num_philos % 2 == 0)
+		print_status(philo, "is thinking");
+	else
+	{
+		t_eat = data->time_to_eat;
+		t_sleep = data->time_to_sleep;
+		t_think = t_eat * 2 + t_sleep;
+		print_status(philo, "is thinking");
+		sleep_ms(t_think * 0.42, data);
+	}
+}
+
 void	*philosopher_routine(void *arg)
 {
 	t_philo	*philo;
 	t_data	*data;
-	long	thinking_time;
 
 	philo = (t_philo *)arg;
 	data = philo->data;
@@ -72,13 +85,9 @@ void	*philosopher_routine(void *arg)
 		sleep_ms(data->time_to_eat / 2, data);
 	while (!sim_finished(data))
 	{
-		take_forks(philo);
-		eat(philo, data);
+		philo_eat(philo, data);
 		philo_sleep(philo, data);
-		print_status(philo, "is thinking");
-		thinking_time = (current_time() - philo->last_meal_time)
-			% data->time_to_eat;
-		sleep_ms(thinking_time, data);
+		philo_think(philo, data);
 	}
 	return (NULL);
 }
