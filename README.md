@@ -1,6 +1,6 @@
 # Philosophers
 ```
-FINAL GRADE: -/100
+FINAL GRADE: 100/100
 ```
 - Multithreading
 - Synchronization

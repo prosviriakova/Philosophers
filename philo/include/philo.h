@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 15:51:24 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/24 16:29:45 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/28 16:38:49 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 # define PHILO_H
 
 # include <limits.h>
-# include <pthread.h> // pthread_xxx
+# include <pthread.h>
 # include <stdbool.h>
-# include <stdio.h>    // printf
-# include <stdlib.h>   // malloc, free
-# include <sys/time.h> // gettimeofday
-# include <unistd.h>   // usleep, write
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/time.h>
+# include <unistd.h>
 
 # define HELP_MSG	"Usage: ./philo <number_of_philosophers> \
 <time_to_die> <time_to_eat> <time_to_sleep> \

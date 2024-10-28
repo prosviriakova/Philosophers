@@ -6,7 +6,7 @@
 /*   By: oprosvir <oprosvir@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/16 01:17:15 by oprosvir          #+#    #+#             */
-/*   Updated: 2024/10/25 20:28:43 by oprosvir         ###   ########.fr       */
+/*   Updated: 2024/10/28 16:39:57 by oprosvir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static void	philo_eat(t_philo *philo, t_data *data)
 	if (data->must_eat_count != -1)
 	{
 		philo->meals_eaten++;
-		// printf("Philosopher %d has eaten %d times\n", philo->id, philo->meals_eaten);
 		if (philo->meals_eaten == data->must_eat_count)
 			increase_int(&data->eat_mutex, &data->philo_full);
 	}
